@@ -10,6 +10,14 @@ function createGrid(numSquares) {
         square.classList.add("square");
         square.setAttribute("style", `flex-basis : calc(100% / ${numSquares})`);
         gridContainer.appendChild(square);
+
+        square.addEventListener("mouseover", () => {
+            let random = () => Math.floor(Math.random() * 256);
+            let actualOpacity = Number(square.style.opacity) >= 1 ? 0.9 : Number(square.style.opacity);
+            actualOpacity += 0.1;
+            square.style.backgroundColor = `rgb(${random()}, ${random()}, ${random()})`;
+            square.style.opacity = String(actualOpacity);
+        });
     }
 }
 
