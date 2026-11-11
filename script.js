@@ -1,18 +1,35 @@
-function addSquares(numSquares) {
-    // Get container inner width minus padding values
-    const gridContainer = document.querySelector(".grid-container");
-    let computedStyle = getComputedStyle(gridContainer);
-    let containerWidth = gridContainer.clientWidth;
-    containerWidth -= parseFloat(computedStyle.paddingLeft) + parseFloat(computedStyle.paddingRight);
-    // Set single square width
-    let squareWidth = containerWidth / numSquares;
+const gridContainer = document.querySelector(".grid-container");
+const newGridButton = document.querySelector("button");
 
+function createGrid(numSquares) {
+    // Reset gridContainer
+    gridContainer.innerHTML = "";
+    
     for (let i = 0; i < (numSquares * numSquares); i++) {
-        const square = document.createElement("div");
-        square.style.width = `${squareWidth}px`;
-        square.style.height = `${squareWidth}px`;
+        let square = document.createElement("div");
+        square.classList.add("square");
+        square.setAttribute("style", `flex-basis : calc(100% / ${numSquares})`);
         gridContainer.appendChild(square);
     }
 }
 
-addSquares(16);
+newGridButton.addEventListener("click", () => {
+    let done = false;
+    while (!done) {
+        let inputInString = prompt("Enter the number of squares desired for each side of the grid (max 100):");
+        if (inputInString === "" || inputInString === null) break; // exit the loop doing nothing
+
+        let numSquares = Number(inputInString);
+
+        if (numSquares > 0 && numSquares <= 100) {
+            createGrid(numSquares);
+            done = true;
+        }
+        
+        else {
+            alert("You must enter a number between 1 and 100! Retry");
+        }
+    }
+});
+
+createGrid(16);
